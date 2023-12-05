@@ -1,7 +1,6 @@
-public class MedicalRecordSystem {
-    // Placeholder attributes and methods
-    // These will be expanded upon in subsequent commits
+// MedicalRecordSystem.java
 
+public class MedicalRecordSystem {
     public static void main(String[] args) {
         // Placeholder main method
         System.out.println("Medical Record System");
