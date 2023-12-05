@@ -1,3 +1,5 @@
+package src;
+
 public class Patient {
     private String patientID;
     private String name;
