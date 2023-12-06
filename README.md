@@ -5,6 +5,3 @@ This repository contains the source code for the Medical Record System project.
 ## Usage
 
 To run the program, execute the following command:
-
-```bash
-java MedicalRecordSystem
