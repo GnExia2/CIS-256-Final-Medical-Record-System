@@ -15,8 +15,6 @@ public class PatientManager {
         // Add the patient to the graph
         graph.addNode(newPatient);
 
-        // Optionally add relationships or perform other operations related to patient addition
-
         // Inform the user that the patient has been added successfully
         System.out.println("Patient added successfully!");
     }

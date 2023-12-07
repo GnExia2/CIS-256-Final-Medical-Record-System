@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class MedicalRecordSystemUI {
@@ -63,13 +64,17 @@ public class MedicalRecordSystemUI {
         System.out.println("Patient added successfully!");
     }
 
-    private static void viewAllPatients(MedicalRecordSystem medicalRecordSystem) {
-        // Implement functionality to view all patients
-        System.out.println("\nAll Patients:");
-        for (Patient patient : medicalRecordSystem.getAllPatients()) {
+    // Method to view all patients
+    public static void viewAllPatients(MedicalRecordSystem medicalRecordSystem) {
+        // Get all patients from the MedicalRecordSystem
+        List<Patient> allPatients = medicalRecordSystem.getAllPatients();
+
+        // Display information for each patient using displayPatientInformation method
+        for (Patient patient : allPatients) {
             displayPatientInformation(patient);
         }
     }
+
 
     private static void scheduleAppointment(MedicalRecordSystem medicalRecordSystem, Scanner scanner) {
         // Implement functionality to schedule an appointment
@@ -102,12 +107,12 @@ public class MedicalRecordSystemUI {
         }
     }
 
+    // Helper method to display patient information
     private static void displayPatientInformation(Patient patient) {
         System.out.println("Patient ID: " + patient.getPatientID());
         System.out.println("Name: " + patient.getName());
         System.out.println("Age: " + patient.getAge());
         System.out.println("Medical History: " + patient.getMedicalHistory());
-        System.out.println("Severity of Illness: " + patient.getSeverityOfIllness());
         System.out.println("-------------");
     }
 
