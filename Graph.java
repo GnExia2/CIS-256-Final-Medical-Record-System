@@ -1,58 +1,43 @@
-import java.util.*;
+// Graph.java
+import java.util.ArrayList;
+import java.util.List;
 
-// Class representing a graph in the medical record system
 public class Graph {
-    // Map to store patients and their relationships
-    private Map<Patient, List<Patient>> adjacencyList;
+    List<Vertex> vertices;
 
-    // Constructor to initialize a new graph
     public Graph() {
-        this.adjacencyList = new HashMap<>();
+        this.vertices = new ArrayList<>();
     }
 
-    // Method to add a patient node to the graph
-    public void addNode(Patient patient) {
-        if (!adjacencyList.containsKey(patient)) {
-            adjacencyList.put(patient, new ArrayList<>());
+    public void addVertex(String label) {
+        vertices.add(new Vertex(label));
+    }
+
+    public void addEdge(String label1, String label2) {
+        Vertex v1 = findVertex(label1);
+        Vertex v2 = findVertex(label2);
+
+        if (v1 != null && v2 != null) {
+            v1.addNeighbor(v2);
         }
     }
 
-    // Method to add an edge (relationship) between two patients
-    public void addEdge(Patient patient1, Patient patient2) {
-        adjacencyList.get(patient1).add(patient2);
-        adjacencyList.get(patient2).add(patient1);
-    }
-
-    // Method to get all patients in the graph
-    public List<Patient> getAllPatients() {
-        return new ArrayList<>(adjacencyList.keySet());
-    }
-
-    // Method to check if the graph has a cycle
-    public boolean hasCycle() {
-        Set<Patient> visited = new HashSet<>();
-        for (Patient patient : getAllPatients()) {
-            if (!visited.contains(patient) && hasCycleDFS(patient, null, visited)) {
-                return true;
+    private Vertex findVertex(String label) {
+        for (Vertex vertex : vertices) {
+            if (vertex.label.equals(label)) {
+                return vertex;
             }
         }
-        return false;
+        return null;
     }
 
-    // Helper method for DFS to detect cycles
-    private boolean hasCycleDFS(Patient current, Patient parent, Set<Patient> visited) {
-        visited.add(current);
-
-        for (Patient neighbor : adjacencyList.get(current)) {
-            if (!visited.contains(neighbor)) {
-                if (hasCycleDFS(neighbor, current, visited)) {
-                    return true;
-                }
-            } else if (!neighbor.equals(parent)) {
-                return true;
+    public void printGraph() {
+        for (Vertex vertex : vertices) {
+            System.out.print(vertex.label + ": ");
+            for (Vertex neighbor : vertex.getNeighbors()) {
+                System.out.print(neighbor.label + " ");
             }
+            System.out.println();
         }
-
-        return false;
     }
 }
