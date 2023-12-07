@@ -1,70 +1,54 @@
 // Patient.java
+
+// Class representing a patient in the medical record system
 public class Patient {
+    // Unique identifier for the patient
     private String patientID;
+    // Name of the patient
     private String name;
+    // Age of the patient
     private int age;
-    private String medicalCondition;
+    // Medical history of the patient
     private String medicalHistory;
+    // Severity of illness for the patient
     private int severityOfIllness;
 
-
-    public Patient(String patientID, String name, int age, String medicalCondition, int severityOfIllness) {
+    // Constructor to initialize a patient with basic information
+    public Patient(String patientID, String name, int age, String medicalHistory, int severityOfIllness) {
         this.patientID = patientID;
         this.name = name;
         this.age = age;
-        this.medicalCondition = medicalCondition;
+        this.medicalHistory = medicalHistory;
         this.severityOfIllness = severityOfIllness;
     }
-    
-    // Getters and setters for all fields
+
+    // Getter method for retrieving the patient's unique identifier
     public String getPatientID() {
         return patientID;
     }
 
-    public void setPatientID(String patientID) {
-        this.patientID = patientID;
-    }
-
+    // Getter method for retrieving the patient's name
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    // Getter method for retrieving the patient's age
     public int getAge() {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getMedicalCondition() {
-        return medicalCondition;
-    }
-
-    public void setMedicalCondition(String medicalCondition) {
-        this.medicalCondition = medicalCondition;
-    }
-
+    // Getter method for retrieving the patient's medical history
     public String getMedicalHistory() {
         return medicalHistory;
     }
 
+    // Setter method for updating the patient's medical history
     public void setMedicalHistory(String medicalHistory) {
         this.medicalHistory = medicalHistory;
     }
 
-    // Method to get severity of illness
+    // Getter method for retrieving the severity of illness for the patient
     public int getSeverityOfIllness() {
         return severityOfIllness;
     }
-    
-    // Method to set severity of illness
-    public void setSeverityOfIllness(int severityOfIllness) {
-        this.severityOfIllness = severityOfIllness;
-    }
-
 }

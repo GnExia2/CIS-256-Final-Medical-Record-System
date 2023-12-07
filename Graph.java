@@ -1,43 +1,58 @@
 import java.util.*;
 
+// Class representing a graph in the medical record system
 public class Graph {
-    private List<Patient> patients;
-    private Map<Patient, List<Patient>> relationships;
+    // Map to store patients and their relationships
+    private Map<Patient, List<Patient>> adjacencyList;
 
+    // Constructor to initialize a new graph
     public Graph() {
-        this.patients = new ArrayList<>();
-        this.relationships = new HashMap<>();
+        this.adjacencyList = new HashMap<>();
     }
 
-    // Add a patient to the graph
+    // Method to add a patient node to the graph
     public void addNode(Patient patient) {
-        patients.add(patient);
-        relationships.put(patient, new ArrayList<>());
+        if (!adjacencyList.containsKey(patient)) {
+            adjacencyList.put(patient, new ArrayList<>());
+        }
     }
 
-    // Add a relationship between two patients
+    // Method to add an edge (relationship) between two patients
     public void addEdge(Patient patient1, Patient patient2) {
-        relationships.get(patient1).add(patient2);
-        relationships.get(patient2).add(patient1);
+        adjacencyList.get(patient1).add(patient2);
+        adjacencyList.get(patient2).add(patient1);
     }
 
-    // Get all patients in the graph
+    // Method to get all patients in the graph
     public List<Patient> getAllPatients() {
-        return patients;
+        return new ArrayList<>(adjacencyList.keySet());
     }
 
-    // Get neighbors of a specific patient
-    public List<Patient> getNeighbors(Patient patient) {
-        return relationships.get(patient);
-    }
-
-    // Get a patient by ID
-    public Patient getPatientByID(String patientID) {
-        for (Patient patient : patients) {
-            if (patient.getPatientID().equals(patientID)) {
-                return patient;
+    // Method to check if the graph has a cycle
+    public boolean hasCycle() {
+        Set<Patient> visited = new HashSet<>();
+        for (Patient patient : getAllPatients()) {
+            if (!visited.contains(patient) && hasCycleDFS(patient, null, visited)) {
+                return true;
             }
         }
-        return null;
+        return false;
+    }
+
+    // Helper method for DFS to detect cycles
+    private boolean hasCycleDFS(Patient current, Patient parent, Set<Patient> visited) {
+        visited.add(current);
+
+        for (Patient neighbor : adjacencyList.get(current)) {
+            if (!visited.contains(neighbor)) {
+                if (hasCycleDFS(neighbor, current, visited)) {
+                    return true;
+                }
+            } else if (!neighbor.equals(parent)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

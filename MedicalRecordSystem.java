@@ -1,31 +1,29 @@
-import java.util.*;
-
+import java.util.HashSet;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Set;
 
 public class MedicalRecordSystem {
+    // Class attributes for storing patient information and data structures
     private Graph graph;
     private Set<String> medicalConditionsSet;
     private PriorityQueue<Appointment> appointmentQueue;
     private BTree medicalRecordsBTree;
-    private PatientManager patientManager;
 
-    // Constructor
+    // Constructor to initialize the MedicalRecordSystem
     public MedicalRecordSystem() {
         this.graph = new Graph();
         this.medicalConditionsSet = new HashSet<>();
         this.appointmentQueue = new PriorityQueue<>();
         this.medicalRecordsBTree = new BTree();
-        this.patientManager = new PatientManager(graph);    }
-
-    // Method to add a patient to the system
-    public void addPatient(Patient newPatient) {
-        patientManager.addPatient(newPatient);
     }
 
-    public PatientManager getPatientManager() {
-        return patientManager;
+    // Method to add a patient to the graph
+    public void addPatient(Patient patient) {
+        graph.addNode(patient);
     }
 
-    // Method to add a relationship between two patients
+    // Method to add a relationship between two patients in the graph
     public void addRelationship(Patient patient1, Patient patient2) {
         graph.addEdge(patient1, patient2);
     }
@@ -39,7 +37,6 @@ public class MedicalRecordSystem {
             priorityQueue.add(patient);
         }
 
-        // Display prioritized patients
         System.out.println("Prioritized Patients:");
         while (!priorityQueue.isEmpty()) {
             displayPatientInformation(priorityQueue.poll());
@@ -54,76 +51,13 @@ public class MedicalRecordSystem {
         }
     }
 
-    // Method to integrate data structures (medical conditions set, appointment queue, B-tree)
+    // Method to integrate data structures (Set, PriorityQueue, BTree)
     public void integrateDataStructures() {
         for (Patient patient : graph.getAllPatients()) {
             medicalConditionsSet.add(patient.getMedicalHistory());
             appointmentQueue.add(new Appointment(patient, "Next appointment"));
             medicalRecordsBTree.insert(patient);
         }
-    }
-
-    // Method to perform Dijkstra's algorithm
-    public void dijkstraAlgorithm(Patient sourcePatient) {
-        // Step 3: Initialize distances and previous nodes
-        Map<Patient, Integer> distanceMap = new HashMap<>();
-        Map<Patient, Patient> previousNodeMap = new HashMap<>();
-        Set<Patient> visited = new HashSet<>();
-
-        // Initialize distances to infinity (or a very large number)
-        for (Patient patient : graph.getAllPatients()) {
-            distanceMap.put(patient, Integer.MAX_VALUE);
-            previousNodeMap.put(patient, null);
-        }
-
-        // Set distance to the source patient as 0
-        distanceMap.put(sourcePatient, 0);
-
-        // Step 4: Main Dijkstra's Algorithm Loop
-        PriorityQueue<Patient> priorityQueue = new PriorityQueue<>(Comparator.comparingInt(distanceMap::get));
-        priorityQueue.add(sourcePatient);
-
-        while (!priorityQueue.isEmpty()) {
-            Patient currentPatient = priorityQueue.poll();
-            visited.add(currentPatient);
-
-            for (Patient neighbor : graph.getNeighbors(currentPatient)) {
-                if (visited.contains(neighbor)) {
-                    continue;  // Skip already visited neighbors
-                }
-
-                int newDistance = distanceMap.get(currentPatient) + getEdgeWeight(currentPatient, neighbor);
-
-                if (newDistance < distanceMap.get(neighbor)) {
-                    distanceMap.put(neighbor, newDistance);
-                    previousNodeMap.put(neighbor, currentPatient);
-                    priorityQueue.add(neighbor);
-                }
-            }
-        }
-
-        // Step 5: Retrieve Shortest Paths (optional)
-        for (Patient destinationPatient : graph.getAllPatients()) {
-            List<Patient> path = new ArrayList<>();
-            Patient currentPatient = destinationPatient;
-
-            while (currentPatient != null) {
-                path.add(currentPatient);
-                currentPatient = previousNodeMap.get(currentPatient);
-            }
-
-            Collections.reverse(path);
-            // Now, 'path' contains the shortest path from source to destinationPatient
-            System.out.println("Shortest path to " + destinationPatient.getName() + ": " + path);
-        }
-    }
-
-    // Helper method to get edge weight between two patients based on severity of illness
-    private int getEdgeWeight(Patient patient1, Patient patient2) {
-        // Replace this with your actual implementation to get the weight of the edge
-        // between patient1 and patient2 in the graph, considering severity of illness.
-        // For example, you might use the absolute difference in severity as the weight.
-        return Math.abs(patient1.getSeverityOfIllness() - patient2.getSeverityOfIllness());
     }
 
     // Getter methods for data structures
@@ -139,17 +73,21 @@ public class MedicalRecordSystem {
         return medicalRecordsBTree;
     }
 
-    public Graph getGraph() {
-        return graph;
-    }
-
     // Helper method to display patient information
     private void displayPatientInformation(Patient patient) {
         System.out.println("Patient ID: " + patient.getPatientID());
         System.out.println("Name: " + patient.getName());
         System.out.println("Age: " + patient.getAge());
         System.out.println("Medical History: " + patient.getMedicalHistory());
-        System.out.println("-------------");
+        System.out.println("Severity of Illness: " + patient.getSeverityOfIllness());
+        System.out.println("----------------------");
     }
 
+    // Main method to run the program
+    public static void main(String[] args) {
+        // Create an instance of MedicalRecordSystem
+        MedicalRecordSystem medicalRecordSystem = new MedicalRecordSystem();
+        // Run the user interface
+        MedicalRecordSystemUI.runUserInterface(medicalRecordSystem);
+    }
 }
