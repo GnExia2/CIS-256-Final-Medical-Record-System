@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
@@ -9,6 +11,8 @@ public class MedicalRecordSystem {
     private Set<String> medicalConditionsSet;
     private PriorityQueue<Appointment> appointmentQueue;
     private BTree medicalRecordsBTree;
+    private List<Patient> allPatients;
+    
 
     // Constructor to initialize the MedicalRecordSystem
     public MedicalRecordSystem() {
@@ -51,14 +55,40 @@ public class MedicalRecordSystem {
         }
     }
 
-    // Method to integrate data structures (Set, PriorityQueue, BTree)
-    public void integrateDataStructures() {
-        for (Patient patient : graph.getAllPatients()) {
-            medicalConditionsSet.add(patient.getMedicalHistory());
-            appointmentQueue.add(new Appointment(patient, "Next appointment"));
-            medicalRecordsBTree.insert(patient);
-        }
+    public List<Patient> getAllPatients() {
+        List<Patient> allPatients = new ArrayList<>();
+        // Logic to retrieve all patients from the graph or any other data structure
+        // and add them to the 'allPatients' list
+        return allPatients;
     }
+
+    // Method to get a patient by ID
+    public Patient getPatientByID(String patientID) {
+        for (Patient patient : allPatients) {
+            if (patient.getPatientID().equals(patientID)) {
+                return patient; // Found the patient with the given ID
+            }
+        }
+        return null; // Patient not found
+    }
+
+    // Method to schedule an appointment
+    public void scheduleAppointment(Appointment appointment) {
+        appointmentQueue.add(appointment);
+    }
+
+    // Method to get all appointments
+    public List<Appointment> getAllAppointments() {
+        List<Appointment> allAppointments = new ArrayList<>();
+
+        while (!appointmentQueue.isEmpty()) {
+            allAppointments.add(appointmentQueue.poll());
+        }
+
+        return allAppointments;
+    }
+
+
 
     // Getter methods for data structures
     public Set<String> getMedicalConditionsSet() {

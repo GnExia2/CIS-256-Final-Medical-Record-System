@@ -1,47 +1,37 @@
 import java.util.Scanner;
 
-// Class representing the user interface for the Medical Record System
 public class MedicalRecordSystemUI {
-    // Static method to run the user interface
+
     public static void runUserInterface(MedicalRecordSystem medicalRecordSystem) {
         try (Scanner scanner = new Scanner(System.in)) {
             int choice;
 
-            // User interface loop
             do {
-                // Display menu options
                 System.out.println("\nMedical Record System Menu:");
                 System.out.println("1. Add Patient");
-                System.out.println("2. Add Relationship");
-                System.out.println("3. Prioritize Patients");
-                System.out.println("4. Optimize Treatment Plans");
-                System.out.println("5. Integrate Data Structures");
+                System.out.println("2. View All Patients");
+                System.out.println("3. Schedule Appointment");
+                System.out.println("4. View All Appointments");
+                System.out.println("5. Prioritize Patients (Manual Greedy Algorithm)");
                 System.out.println("0. Exit");
                 System.out.print("Enter your choice: ");
                 choice = scanner.nextInt();
 
-                // Process user choice
                 switch (choice) {
                     case 1:
-                        // Implement patient addition functionality
                         addPatient(medicalRecordSystem, scanner);
                         break;
                     case 2:
-                        // Implement relationship addition functionality
-                        // (This section is not implemented in the provided code)
-                        System.out.println("Feature not implemented yet.");
+                        viewAllPatients(medicalRecordSystem);
                         break;
                     case 3:
-                        // Prioritize patients based on medical history length
-                        medicalRecordSystem.prioritizePatients();
+                        scheduleAppointment(medicalRecordSystem, scanner);
                         break;
                     case 4:
-                        // Optimize treatment plans for all patients
-                        medicalRecordSystem.optimizeTreatmentPlans();
+                        viewAllAppointments(medicalRecordSystem);
                         break;
                     case 5:
-                        // Integrate data structures (Set, PriorityQueue, BTree)
-                        medicalRecordSystem.integrateDataStructures();
+                        prioritizePatients(medicalRecordSystem);
                         break;
                     case 0:
                         System.out.println("Exiting Medical Record System. Goodbye!");
@@ -53,26 +43,77 @@ public class MedicalRecordSystemUI {
         }
     }
 
-    // Method to interactively add a patient to the system
     private static void addPatient(MedicalRecordSystem medicalRecordSystem, Scanner scanner) {
-        // Collect patient information from the user
-        System.out.print("Enter Patient ID: ");
+        // Implement patient addition functionality
+        System.out.print("Enter patient ID: ");
         String patientID = scanner.next();
-        System.out.print("Enter Patient Name: ");
+        System.out.print("Enter patient name: ");
         String name = scanner.next();
-        System.out.print("Enter Patient Age: ");
+        System.out.print("Enter patient age: ");
         int age = scanner.nextInt();
-        System.out.print("Enter Patient Medical History: ");
+        System.out.print("Enter patient medical history: ");
         String medicalHistory = scanner.next();
-        System.out.print("Enter Severity of Illness: ");
+        System.out.print("Enter patient severity of illness: ");
         int severityOfIllness = scanner.nextInt();
 
-        // Create a new patient
+        // Create a new patient and add it to the system
         Patient newPatient = new Patient(patientID, name, age, medicalHistory, severityOfIllness);
-
-        // Add the patient to the system
         medicalRecordSystem.addPatient(newPatient);
 
         System.out.println("Patient added successfully!");
+    }
+
+    private static void viewAllPatients(MedicalRecordSystem medicalRecordSystem) {
+        // Implement functionality to view all patients
+        System.out.println("\nAll Patients:");
+        for (Patient patient : medicalRecordSystem.getAllPatients()) {
+            displayPatientInformation(patient);
+        }
+    }
+
+    private static void scheduleAppointment(MedicalRecordSystem medicalRecordSystem, Scanner scanner) {
+        // Implement functionality to schedule an appointment
+        System.out.print("Enter patient ID for appointment: ");
+        String patientID = scanner.next();
+        Patient patient = medicalRecordSystem.getPatientByID(patientID);
+
+        if (patient != null) {
+            Appointment newAppointment = new Appointment(patient, "Next appointment");
+            medicalRecordSystem.scheduleAppointment(newAppointment);
+            System.out.println("Appointment scheduled successfully!");
+        } else {
+            System.out.println("Patient not found. Please check the patient ID.");
+        }
+    }
+
+    private static void viewAllAppointments(MedicalRecordSystem medicalRecordSystem) {
+        // Implement functionality to view all appointments
+        System.out.println("\nAll Appointments:");
+        for (Appointment appointment : medicalRecordSystem.getAllAppointments()) {
+            displayAppointmentInformation(appointment);
+        }
+    }
+
+    private static void prioritizePatients(MedicalRecordSystem medicalRecordSystem) {
+        // Implement functionality to prioritize patients using a manual greedy algorithm
+        System.out.println("\nPrioritized Patients (Manual Greedy Algorithm):");
+        for (Patient patient : medicalRecordSystem.prioritizePatients()) {
+            displayPatientInformation(patient);
+        }
+    }
+
+    private static void displayPatientInformation(Patient patient) {
+        System.out.println("Patient ID: " + patient.getPatientID());
+        System.out.println("Name: " + patient.getName());
+        System.out.println("Age: " + patient.getAge());
+        System.out.println("Medical History: " + patient.getMedicalHistory());
+        System.out.println("Severity of Illness: " + patient.getSeverityOfIllness());
+        System.out.println("-------------");
+    }
+
+    private static void displayAppointmentInformation(Appointment appointment) {
+        System.out.println("Patient ID: " + appointment.getPatient().getPatientID());
+        System.out.println("Appointment Details: " + appointment.getDetails());
+        System.out.println("-------------");
     }
 }

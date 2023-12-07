@@ -6,6 +6,7 @@ public class Appointment implements Comparable<Appointment> {
     private Patient patient;
     // Description of the appointment
     private String description;
+    private String details;
 
     // Constructor to initialize an appointment
     public Appointment(Patient patient, String description) {
@@ -22,6 +23,13 @@ public class Appointment implements Comparable<Appointment> {
     public String getDescription() {
         return description;
     }
+
+    // Method to get details of the appointment
+    public String getDetails() {
+        return "Patient: " + patient.getName() + ", Details: " + details;
+    }
+
+
 
     // Comparable interface method for comparing appointments based on patient severity
     @Override
