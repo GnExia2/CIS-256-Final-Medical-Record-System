@@ -30,7 +30,6 @@ public class MedicalRecord {
         patientDoctorGraph.addEdge(patientId, doctorId);
     }
 
-
     public List<Doctor> getAllDoctors() {
         return doctors;
     }
