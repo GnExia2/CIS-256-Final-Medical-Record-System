@@ -1,6 +1,6 @@
 public class MainApp {
     public static void main(String[] args) {
-        MedicalRecordSystem recordSystem = new MedicalRecordSystem();
+        MedicalRecord recordSystem = new MedicalRecord();
 
         // Load initial data
         InitialDataLoader.loadInitialData(recordSystem);

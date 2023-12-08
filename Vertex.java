@@ -1,4 +1,3 @@
-// Vertex.java
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +12,6 @@ public class Vertex {
 
     public void addNeighbor(Vertex neighbor) {
         neighbors.add(neighbor);
-        neighbor.neighbors.add(this); // For an undirected graph
     }
 
     public List<Vertex> getNeighbors() {
