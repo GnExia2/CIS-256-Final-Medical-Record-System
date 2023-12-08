@@ -9,14 +9,14 @@ public class MedicalRecordUI {
     private static final MedicalRecordSystem recordSystem = new MedicalRecordSystem();
 
     public static void main(String[] args) {
-        launchUI();
+        launchUI(recordSystem);
     }
 
-    public static void launchUI() {
-        displayMenu();
+    public static void launchUI(MedicalRecordSystem recordSystem) {
+        displayMenu(recordSystem);
     }
 
-    public static void displayMenu() {
+    public static void displayMenu(MedicalRecordSystem recordSystem) {
         int choice;
         do {
             // Display the main menu
@@ -37,35 +37,35 @@ public class MedicalRecordUI {
             // Perform action based on user choice
             switch (choice) {
                 case 1:
-                    addPatient();
+                    addPatient(recordSystem);
                     break;
                 case 2:
-                    addDoctor();
+                    addDoctor(recordSystem);
                     break;
                 case 3:
-                    scheduleAppointment();
+                    scheduleAppointment(recordSystem);
                     break;
                 case 4:
-                    viewPatientInformation();
+                    viewPatientInformation(recordSystem);
                     break;
                 case 5:
-                    viewMostConnectedPatient();
+                    viewMostConnectedPatient(recordSystem);
                     break;
                 case 6:
                     viewAllPatients(recordSystem);
                     break;
                 case 7:
                     System.out.println("Exiting the Medical Record System. Goodbye!");
-                    break;    
+                    break;
                 default:
                     System.out.println("Invalid choice. Please enter a valid option.");
             }
-        } while (choice != 6);
+        } while (choice != 7);
     }
 
 
     // Method to add a new patient to the system
-    private static void addPatient() {
+    private static void addPatient(MedicalRecordSystem recordSystem) {
         // Implement logic to gather patient information and add to the system
         // For simplicity, let's assume patient ID, name, and medical condition are entered
         System.out.print("Enter Patient ID: ");
@@ -84,7 +84,7 @@ public class MedicalRecordUI {
     }
 
     // Method to add a new doctor to the system
-    private static void addDoctor() {
+    private static void addDoctor(MedicalRecordSystem recordSystem) {
         // Implement logic to gather doctor information and add to the system
         // For simplicity, let's assume doctor ID, name, and specialty are entered
         System.out.print("Enter Doctor ID: ");
@@ -103,7 +103,7 @@ public class MedicalRecordUI {
     }
 
     // Method to schedule a new appointment
-    private static void scheduleAppointment() {
+    private static void scheduleAppointment(MedicalRecordSystem recordSystem) {
         // Implement logic to gather appointment information and add to the system
         // For simplicity, let's assume patient ID, doctor ID, and date are entered
         System.out.print("Enter Patient ID for Appointment: ");
@@ -129,7 +129,7 @@ public class MedicalRecordUI {
         System.out.println("Appointment scheduled successfully!");
     }
 
-    private static void viewPatientInformation() {
+    private static void viewPatientInformation(MedicalRecordSystem recordSystem) {
         System.out.println("\n=== View Patient Information ===");
         System.out.print("Enter Patient ID: ");
         String patientId = scanner.nextLine();
@@ -173,9 +173,8 @@ public class MedicalRecordUI {
         }
     }
 
-
     // Method to view the most connected patient
-    private static void viewMostConnectedPatient() {
+    private static void viewMostConnectedPatient(MedicalRecordSystem recordSystem) {
         System.out.println("\nViewing Most Connected Patient:");
         MedicalRecordSystem.displayMostConnectedPatient(recordSystem);
     }

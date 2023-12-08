@@ -1,6 +1,11 @@
 public class MainApp {
     public static void main(String[] args) {
-        MedicalRecordUI.launchUI();
-    }
+        MedicalRecordSystem recordSystem = new MedicalRecordSystem();
 
+        // Load initial data
+        InitialDataLoader.loadInitialData(recordSystem);
+
+        // Launch the UI
+        MedicalRecordUI.launchUI(recordSystem);
+    }
 }
