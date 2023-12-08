@@ -34,5 +34,7 @@ public class InitialDataLoader {
         recordSystem.scheduleAppointment("P006", "D003", currentDate);
         recordSystem.scheduleAppointment("P007", "D001", currentDate);
         recordSystem.scheduleAppointment("P008", "D002", currentDate);
+
+        System.out.println("data initialized");
     }
 }
