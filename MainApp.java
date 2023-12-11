@@ -4,10 +4,7 @@ public class MainApp {
 
         // Load initial data
         InitialDataLoader.loadInitialData(recordSystem);
-
-        // Apply Dijkstra's algorithm from a specific patient
-        DijkstraAlgorithm.findShortestPaths(recordSystem, "P1");
-
+        
         // Launch the UI
         MedicalRecordUI.launchUI(recordSystem);
     }
