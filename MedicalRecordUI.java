@@ -4,12 +4,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+// Class to represent the user interface for the medical record system
 public class MedicalRecordUI {
+    // Scanner object for user input
     private static final Scanner scanner = new Scanner(System.in);
 
+    // Method to launch the medical record system UI
     public static void launchUI(MedicalRecord recordSystem) {
         int choice;
         do {
+            // Display menu options to the user
             System.out.println("\n==== Medical Record System ====");
             System.out.println("1. Add Patient");
             System.out.println("2. Add Doctor");
@@ -21,9 +25,11 @@ public class MedicalRecordUI {
             System.out.println("8. Exit");
             System.out.print("Enter your choice: ");
 
+            // Get user input for menu choice
             choice = scanner.nextInt();
             scanner.nextLine();
 
+            // Execute corresponding method based on user choice
             switch (choice) {
                 case 1:
                     addPatient(recordSystem);
@@ -55,6 +61,7 @@ public class MedicalRecordUI {
         } while (choice != 8);
     }
 
+    // Method to add a new patient using user input
     private static void addPatient(MedicalRecord recordSystem) {
         System.out.print("Enter patient ID: ");
         String id = scanner.nextLine();
@@ -65,10 +72,12 @@ public class MedicalRecordUI {
         System.out.print("Enter severity level (1-10): ");
         int severityLevel = scanner.nextInt();
 
+        // Call the corresponding method in the MedicalRecord class to add a patient
         recordSystem.addPatient(id, name, condition, severityLevel);
         System.out.println("Patient added successfully!");
     }
 
+    // Method to add a new doctor using user input
     private static void addDoctor(MedicalRecord recordSystem) {
         System.out.print("Enter doctor ID: ");
         String id = scanner.nextLine();
@@ -77,10 +86,12 @@ public class MedicalRecordUI {
         System.out.print("Enter doctor specialization: ");
         String specialization = scanner.nextLine();
 
+        // Call the corresponding method in the MedicalRecord class to add a doctor
         recordSystem.addDoctor(id, name, specialization);
         System.out.println("Doctor added successfully!");
     }
 
+    // Method to schedule an appointment using user input
     private static void scheduleAppointment(MedicalRecord recordSystem) {
         System.out.print("Enter patient ID: ");
         String patientId = scanner.nextLine();
@@ -88,11 +99,13 @@ public class MedicalRecordUI {
         String doctorId = scanner.nextLine();
 
         try {
+            // Get user input for appointment date and parse it
             System.out.print("Enter appointment date (yyyy-MM-dd HH:mm:ss): ");
             String dateString = scanner.nextLine();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = dateFormat.parse(dateString);
 
+            // Call the corresponding method in the MedicalRecord class to schedule an appointment
             recordSystem.scheduleAppointment(patientId, doctorId, date);
             System.out.println("Appointment scheduled successfully!");
         } catch (ParseException e) {
@@ -100,13 +113,16 @@ public class MedicalRecordUI {
         }
     }
 
+    // Method to view patient information using user input
     private static void viewPatientInformation(MedicalRecord recordSystem) {
         System.out.print("Enter patient ID: ");
         String patientId = scanner.nextLine();
 
+        // Call the corresponding method in the MedicalRecord class to get patient information
         Patient patient = recordSystem.findPatientById(patientId);
 
         if (patient != null) {
+            // Display patient information
             System.out.println("\n==== Patient Information ====");
             System.out.println("Patient ID: " + patient.getId());
             System.out.println("Patient Name: " + patient.getName());
@@ -117,10 +133,13 @@ public class MedicalRecordUI {
         }
     }
 
+    // Method to view the most severe patient in the system
     private static void viewMostSeverePatient(MedicalRecord recordSystem) {
+        // Call the corresponding method in the MedicalRecord class to get the most severe patient
         Patient mostSeverePatient = recordSystem.findMostSeverePatient();
 
         if (mostSeverePatient != null) {
+            // Display information about the most severe patient
             System.out.println("\n==== Most Severe Patient ====");
             System.out.println("Patient ID: " + mostSeverePatient.getId());
             System.out.println("Patient Name: " + mostSeverePatient.getName());
@@ -131,11 +150,14 @@ public class MedicalRecordUI {
         }
     }
 
+    // Method to view information about all patients in the system
     private static void viewAllPatients(MedicalRecord recordSystem) {
+        // Call the corresponding method in the MedicalRecord class to get all patients
         System.out.println("\n==== All Patients ====");
         List<Patient> patients = recordSystem.getAllPatients();
 
         if (!patients.isEmpty()) {
+            // Display information about each patient
             for (Patient patient : patients) {
                 System.out.println("Patient ID: " + patient.getId());
                 System.out.println("Patient Name: " + patient.getName());
@@ -148,11 +170,14 @@ public class MedicalRecordUI {
         }
     }
 
+    // Method to view information about all doctors in the system
     private static void viewAllDoctors(MedicalRecord recordSystem) {
+        // Call the corresponding method in the MedicalRecord class to get all doctors
         System.out.println("\n==== All Doctors ====");
         List<Doctor> doctors = recordSystem.getAllDoctors();
 
         if (!doctors.isEmpty()) {
+            // Display information about each doctor
             for (Doctor doctor : doctors) {
                 System.out.println("Doctor ID: " + doctor.getId());
                 System.out.println("Doctor Name: " + doctor.getName());

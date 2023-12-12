@@ -1,14 +1,25 @@
 import java.util.*;
 
+// Class to represent a medical record system
 public class MedicalRecord {
+    // Lists to store patients, doctors, and appointments
     private List<Patient> patients;
     private List<Doctor> doctors;
     private List<Appointment> appointments;
+
+    // Graph to represent relationships between patients and doctors
     private Graph patientDoctorGraph;
+
+    // Priority queue to manage appointments based on date
     private PriorityQueue<Appointment> appointmentPriorityQueue;
+
+    // Stack to keep track of patient history
     private Stack<Patient> patientHistoryStack;
+
+    // Set to store unique doctors using HashSet
     private Set<Doctor> uniqueDoctors;
 
+    // Constructor to initialize lists and data structures
     public MedicalRecord() {
         this.patients = new ArrayList<>();
         this.doctors = new ArrayList<>();
@@ -19,6 +30,7 @@ public class MedicalRecord {
         this.uniqueDoctors = new HashSet<>();
     }
 
+    // Method to add a new patient to the system
     public void addPatient(String id, String name, String medicalCondition, int severityLevel) {
         Patient newPatient = new Patient(id, name, medicalCondition, severityLevel);
         patients.add(newPatient);
@@ -26,6 +38,7 @@ public class MedicalRecord {
         patientDoctorGraph.addVertex(id);
     }
 
+    // Method to add a new doctor to the system
     public void addDoctor(String id, String name, String specialization) {
         Doctor newDoctor = new Doctor(id, name, specialization);
         doctors.add(newDoctor);
@@ -33,6 +46,7 @@ public class MedicalRecord {
         patientDoctorGraph.addVertex(id);
     }
 
+    // Method to schedule an appointment between a patient and a doctor
     public void scheduleAppointment(String patientId, String doctorId, Date date) {
         Appointment newAppointment = new Appointment(patientId, doctorId, date);
         appointments.add(newAppointment);
@@ -40,20 +54,12 @@ public class MedicalRecord {
         patientDoctorGraph.addEdge(patientId, doctorId);
     }
 
-    // Method to schedule appointment using priority queue
-    public void scheduleAppointmentWithPriorityQueue(String patientId, String doctorId, Date date) {
-        Appointment newAppointment = new Appointment(patientId, doctorId, date);
-        appointments.add(newAppointment);
-        appointmentPriorityQueue.add(newAppointment);
-        patientDoctorGraph.addEdge(patientId, doctorId);
-    }
-
-    // Method to get the next scheduled appointment
+    // Method to get the next scheduled appointment using priority queue
     public Appointment getNextScheduledAppointment() {
         return appointmentPriorityQueue.peek();
     }
 
-    // Method to add a patient and push onto the stack
+    // Method to add a patient with history to the system and update the stack
     public void addPatientWithHistory(String id, String name, String medicalCondition, int severityLevel) {
         Patient newPatient = new Patient(id, name, medicalCondition, severityLevel);
         patients.add(newPatient);
@@ -74,18 +80,22 @@ public class MedicalRecord {
         patientDoctorGraph.addVertex(id);
     }
 
+    // Method to retrieve all doctors in the system
     public List<Doctor> getAllDoctors() {
         return doctors;
     }
 
+    // Method to retrieve all patients in the system
     public List<Patient> getAllPatients() {
         return patients;
     }
 
+    // Method to print patient-doctor connections in the graph
     public void printPatientConnections() {
         patientDoctorGraph.printGraph();
     }
 
+    // Method to find the most severe patient among connected patients
     public Patient findMostSeverePatient() {
         List<Patient> connectedPatients = getConnectedPatients();
 
@@ -104,6 +114,7 @@ public class MedicalRecord {
         return null;
     }
 
+    // Helper method to retrieve connected patients from the graph
     private List<Patient> getConnectedPatients() {
         List<Patient> connectedPatients = new ArrayList<>();
 
@@ -117,6 +128,7 @@ public class MedicalRecord {
         return connectedPatients;
     }
 
+    // Method to find a patient by ID
     public Patient findPatientById(String patientId) {
         for (Patient patient : patients) {
             if (patient.getId().equals(patientId)) {
