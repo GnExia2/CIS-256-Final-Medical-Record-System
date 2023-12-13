@@ -35,3 +35,40 @@ Interactive UI: The program features an interactive user interface in the termin
 
 6. Impact on Marginalized Communities
 Inclusivity: The program strives for inclusivity by considering potential biases in data structures. It aims to rebuild trust, especially within marginalized communities that may have historical distrust in healthcare systems.
+
+
+
+Diagrams for Write-Up
+
+Class Diagram
+
++----------------+      +------------+      +---------------+
+|   Appointment  |      |   Patient  |      |    Doctor     |
++----------------+      +------------+      +---------------+
+| - patientId    |      | - id       |      | - id          |
+| - doctorId     |      | - name     |      | - name        |
+| - date         |      | - condition|      | - specialization|
+|----------------|      | - severity |      +---------------+
+| + getPatientId()|      | + getId()  |      | + getId()     |
+| + getDoctorId() |      | + getName()|      | + getName()   |
+| + getDate()     |      | + getMedicalCondition() | + getSpecialization() |
++----------------+      +------------+      +---------------+
+
+/////////////////////////////////////////////////////////////////////////////////
+
+Sequence Diagram
+
+Patient          MedicalRecord        Doctor
+  |                   |                 |
+  | addPatient(...)   |                 |
+  |------------------>|                 |
+  |                   |                 |
+  |                   | addDoctor(...)  |
+  |                   |---------------->|
+  |                   |                 |
+  |                   | scheduleAppointment(...)|
+  |                   |------------------------>|
+  |                   |                 |
+  |                   |                 | findPatientById(...) |
+  |                   |                 |-------------------->|
+  |                   |                 |                    |
